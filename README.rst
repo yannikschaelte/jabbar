@@ -12,20 +12,19 @@ looks like:
 
    75% |█████████████████      | 750/1000
 
-It is lightweight, and easy to use and modify.
-As a special feature, it can deal with more items than expected, e.g.
-1100/1000.
+It is lightweight, easy to use and customizable.
+As a special feature, it gracefully deals with seeing more items than expected, e.g. 1100/1000.
 
 Install
 -------
 
-jabbar can be installed from `PyPI <https://pypi.org/project/jabbar>`_ via
+jabbar can be installed from `PyPI <https://pypi.org/project/jabbar>`_ via your favorite shell:
 
 .. code-block:: sh
 
    $ pip install jabbar
 
-or from the latest code on `GitHub <https://github.com/yannikschaelte/jabbar>`_ with
+or from the latest code on `GitHub <https://github.com/yannikschaelte/jabbar>`_ with:
 
 .. code-block:: sh
 
@@ -51,18 +50,18 @@ The updating scheme can also be individually specified:
 .. code-block:: python
 
    from jabbar import jabbar
-   with jabbar(total=1000) as bar:
+   with jabbar(total=1000, width=30) as bar:
        for _ in range(50):
            bar.inc(20)
 
-When usage of a context manager is undesirable, use ``jabbar.finish()`` to
-finish the output line.
+When usage of a context manager is undesirable, use ``jabbar.finish()`` to clean up the output.
 
 
 License
 -------
 
 jabbar is available under a MIT license.
+
 
 .. |build| image:: https://github.com/yannikschaelte/jabbar/workflows/CI/badge.svg
    :target: https://github.com/yannikschaelte/jabbar/actions
