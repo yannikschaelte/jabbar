@@ -18,8 +18,11 @@ jobs:
       with:
         python-version: ${{ matrix.python-version }}
 
-    - name: Install dependencies
-      run: pip install wheel tox
+    - name: Install wheel
+      run: pip install wheel
+
+    - name: Install tox
+      run: pip install tox
 
     - name: Run tox
       run: tox
