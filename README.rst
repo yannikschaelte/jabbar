@@ -1,6 +1,8 @@
 jabbar
 ======
 
+|build| |pypi|
+
 Just Another Beautiful progress BAR (some might replace Beautiful by Boring).
 
 jabbar is a python package implementing a simple progress bar. The output
@@ -61,3 +63,12 @@ License
 -------
 
 jabbar is available under a MIT license.
+
+.. |build| image:: https://github.com/yannikschaelte/jabbar/workflows/CI/badge.svg
+   :target: https://github.com/yannikschaelte/jabbar/actions
+   :alt: Build status
+
+
+.. |pypi| image:: https://img.shields.io/pypi/v/jabbar.svg
+   :target: https://pypi.org/project/jabbar/
+   :alt: Current version on PyPI
