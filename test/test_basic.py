@@ -56,3 +56,15 @@ def test_file():
     with tempfile.NamedTemporaryFile(mode='w+') as file:
         for _ in jabbar(range(100), file=file):
             pass
+
+
+def test_enable():
+    """Test enabling functionality."""
+    for _ in jabbar(range(100), enable=False):
+        pass
+
+
+def test_keep():
+    """Test the keep functionality."""
+    for _ in jabbar(range(100), keep=False):
+        pass

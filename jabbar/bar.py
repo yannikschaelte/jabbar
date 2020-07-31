@@ -16,20 +16,30 @@ class JabBar:
             self,
             iterable: Iterable = None,
             total: int = None,
+            comment: str = "",
             width: int = 24,
-            file: TextIO = sys.stdout):
+            file: TextIO = sys.stdout,
+            enable: bool = True,
+            keep: bool = True):
         """Initialize the bar.
 
         :param iterable: An iterable to show the progress for while iterating
         :param total: The expected number of items
+        :param comment: A comment to append to each line
         :param width: The width of the progress bar in characters
-        :param file: The target where to write the progress bar to.
+        :param file: The target where to write the progress bar to
+        :param enable: Whether to actually show the progress bar
+        :param keep: Whether to keep or remove the bar afterwards
         """
         self.iterable = iterable
         self.total: int = total
+        self.comment: str = comment
         self.width: int = width
         self.file: TextIO = file
+        self.enable: bool = enable
+        self.keep: bool = keep
         self.n_done: int = 0
+        self.len: int = 0
 
         if isinstance(iterable, Sized) and total is None:
             total = len(iterable)
@@ -55,8 +65,8 @@ class JabBar:
         :param end: Symbol for the end of the line
         """
         """Write a line in-place."""
-        print('\r' + line, end=end, file=self.file)
-
+        self.len = len(line)
+        print(line, end=end, file=self.file)
         self.file.flush()
 
     def update(self, n_done: int) -> None:
@@ -65,6 +75,8 @@ class JabBar:
         :param n_done: The number of finished tasks.
         """
         self.n_done = n_done
+        if not self.enable:
+            return
         line = self.get_line()
         self.write(line)
 
@@ -93,9 +105,10 @@ class JabBar:
 
         str_done = f"{self.n_done}/{self.total}"
 
-        line = (str_r_done + bar_prefix +
+        line = ('\r' + str_r_done + bar_prefix +
                 bar_full + bar_current + bar_empty +
-                bar_suffix + str_done)
+                bar_suffix + str_done +
+                " " + self.comment)
 
         return line
 
@@ -108,7 +121,12 @@ class JabBar:
 
     def finish(self) -> None:
         """Finish the line by a line break."""
-        self.write('', end='\n')
+        if not self.enable:
+            return
+        if self.keep:
+            self.write('', end='\n')
+        else:
+            self.write('\r' + ' ' * self.len + '\r')
 
     def __iter__(self):
         """Iterate over the iterable."""
