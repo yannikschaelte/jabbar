@@ -57,6 +57,8 @@ class JabBar:
         """Write a line in-place."""
         print('\r' + line, end=end, file=self.file)
 
+        self.file.flush()
+
     def update(self, n_done: int) -> None:
         """Update the output.
 
