@@ -1,7 +1,7 @@
 jabbar
 ======
 
-|build| |pypi|
+|build| |coverage| |pypi|
 
 Just Another Beautiful progress BAR (some might replace Beautiful by Boring).
 
@@ -66,6 +66,10 @@ jabbar is available under a MIT license.
 .. |build| image:: https://github.com/yannikschaelte/jabbar/workflows/CI/badge.svg
    :target: https://github.com/yannikschaelte/jabbar/actions
    :alt: Build status
+
+
+.. |coverage| image:: https://codecov.io/gh/yannikschaelte/jabbar/branch/master/graph/badge.svg
+   :target: https://codecov.io/gh/yannikschaelte/jabbar
 
 
 .. |pypi| image:: https://img.shields.io/pypi/v/jabbar.svg
