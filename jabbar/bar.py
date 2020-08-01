@@ -47,8 +47,8 @@ class JabBar:
 
         if self.total is None:
             raise ValueError(
-                "Either the iterable must have a length attribute, "
-                "or a total must have been specified.")
+                "Either must the iterable have a length attribute, "
+                "or a total been specified.")
 
     def __enter__(self):
         """Prepare upon entering a context manager."""
@@ -74,9 +74,9 @@ class JabBar:
 
         :param n_done: The number of finished tasks.
         """
-        self.n_done = n_done
         if not self.enable:
             return
+        self.n_done = n_done
         line = self.get_line()
         self.write(line)
 
@@ -131,7 +131,8 @@ class JabBar:
     def __iter__(self):
         """Iterate over the iterable."""
         if self.iterable is None:
-            raise ValueError("")
+            raise ValueError(
+                "To use jabbar in iterable mode, pass an iterable.")
         for val in self.iterable:
             yield val
             self.inc()
