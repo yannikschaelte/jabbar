@@ -2,11 +2,12 @@
 
 import sys
 from collections.abc import Iterable, Sized
-from typing import TextIO
+from typing import TextIO, Tuple, Union
+from unicodedata import east_asian_width as eaw
 
-bar_symbols = ('', '▏', '▎', '▍', '▌', '▋', '▊', '▉', '█')
-bar_prefix = ' |'
-bar_suffix = '| '
+BAR_SYMBOLS = ('', '▏', '▎', '▍', '▌', '▋', '▊', '▉', '█')
+BAR_PREFIX = ' |'
+BAR_SUFFIX = '| '
 
 
 class JabBar:
@@ -20,7 +21,8 @@ class JabBar:
             width: int = 24,
             file: TextIO = sys.stdout,
             enable: bool = True,
-            keep: bool = True):
+            keep: bool = True,
+            bar_symbols: Union[Tuple[str], str] = BAR_SYMBOLS):
         """Initialize the bar.
 
         :param iterable: An iterable to show the progress for while iterating
@@ -30,6 +32,7 @@ class JabBar:
         :param file: The target where to write the progress bar to
         :param enable: Whether to actually show the progress bar
         :param keep: Whether to keep or remove the bar afterwards
+        :param bar_symbols: Bar symbols to use, with increasing fill degree.
         """
         self.iterable = iterable
         self.total: int = total
@@ -38,6 +41,15 @@ class JabBar:
         self.file: TextIO = file
         self.enable: bool = enable
         self.keep: bool = keep
+
+        if isinstance(bar_symbols, str):
+            bar_symbols = (bar_symbols,)
+        bar_symbols = tuple(bar_symbols)
+        if '' not in bar_symbols:
+            # add empty element
+            bar_symbols = ('',) + bar_symbols
+        self.bar_symbols = bar_symbols
+
         self.n_done: int = 0
         self.len: int = 0
 
@@ -94,20 +106,27 @@ class JabBar:
 
         # number of full bar fields is the integer below
         n_full = int(width_full)
-        bar_full = bar_symbols[-1] * n_full
+        # number of full symbols
+        n_symbol_full = int(n_full / nchar(self.bar_symbols[-1]))
+        bar_full = self.bar_symbols[-1] * n_symbol_full
 
-        # which of the bar symbols to select
-        phase = int((width_full - n_full) * len(bar_symbols))
-        bar_current = bar_symbols[phase]
+        # which of the bar symbols to select for the current symbol
+        phase = int((width_full - n_full) * len(self.bar_symbols))
+        # number of current symbols
+        n_symbol_phase = 0
+        if len(self.bar_symbols[phase]):
+            n_symbol_phase = int(1 / nchar(self.bar_symbols[phase]))
+        bar_current = self.bar_symbols[phase] * n_symbol_phase
 
-        n_empty = self.width - n_full - len(bar_current)
+        # number of empty symbols
+        n_empty = self.width - nchar(bar_full) - nchar(bar_current)
         bar_empty = ' ' * n_empty
 
         str_done = f"{self.n_done}/{self.total}"
 
-        line = ('\r' + str_r_done + bar_prefix +
+        line = ('\r' + str_r_done + BAR_PREFIX +
                 bar_full + bar_current + bar_empty +
-                bar_suffix + str_done +
+                BAR_SUFFIX + str_done +
                 " " + self.comment)
 
         return line
@@ -137,6 +156,19 @@ class JabBar:
             yield val
             self.inc()
         self.finish()
+
+
+def nchar(symbol: str):
+    """Calculate number of unit-width characters for a symbol.
+
+    This may not work on all systems and for all symbols.
+
+    Parameters
+    ----------
+    symbol:
+        The symbol (single character or string).
+    """
+    return len(symbol) + sum(1 for char in symbol if eaw(char) in ['F', 'W'])
 
 
 # convenience alias

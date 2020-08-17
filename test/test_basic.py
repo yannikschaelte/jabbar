@@ -68,3 +68,9 @@ def test_keep():
     """Test the keep functionality."""
     for _ in jabbar(range(100), keep=False):
         pass
+
+
+def test_custom_symbols():
+    """Test passing custom bar symbols."""
+    for _ in jabbar(range(100), bar_symbols='yo'):
+        pass
