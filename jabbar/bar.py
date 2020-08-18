@@ -158,15 +158,14 @@ class JabBar:
         self.finish()
 
 
-def nchar(symbol: str):
+def nchar(symbol: str) -> int:
     """Calculate number of unit-width characters for a symbol.
 
     This may not work on all systems and for all symbols.
 
-    Parameters
-    ----------
-    symbol:
-        The symbol (single character or string).
+    :param symbol: The symbol (single character or string).
+
+    :returns: A guess of the number of unit-width characters.
     """
     return len(symbol) + sum(1 for char in symbol if eaw(char) in ['F', 'W'])
 

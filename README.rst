@@ -56,6 +56,8 @@ The updating scheme can also be individually specified:
 
 When usage of a context manager is undesirable, use ``jabbar.finish()`` to clean up the output.
 
+Further examples can be found in the `example/howto.ipynb <https://github.com/yannikschaelte/jabbar/blob/master/example/howto.ipynb>`_ notebook.
+
 
 License
 -------
