@@ -14,6 +14,7 @@ looks like:
 
 It is lightweight, easy to use and customizable.
 As a special feature, it gracefully deals with seeing more items than expected, e.g. 1100/1000.
+Also, it supports unicorns.
 
 Install
 -------
