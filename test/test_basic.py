@@ -72,5 +72,29 @@ def test_keep():
 
 def test_custom_symbols():
     """Test passing custom bar symbols."""
-    for _ in jabbar(range(100), bar_symbols='yo'):
+    for _ in jabbar(range(100), symbols='yo'):
         pass
+
+
+def test_output():
+    """Test the actual output."""
+    total = 50
+    bar = jabbar(total=total)
+    for _ in range(20):
+        bar.inc()
+    out = bar.get_line()
+    assert out == "\r 40% |█████████▋              | 20/50 "
+    assert bar.n_done == 20
+    bar.finish()
+
+
+def test_output_custom_symbols():
+    """Test the output with custom symbols."""
+    total = 50
+    bar = jabbar(total=total, symbols='xo')
+    for _ in range(17):
+        bar.inc()
+    out = bar.get_line()
+    assert out == "\r 34% |xoxoxoxo                | 17/50 "
+    assert bar.n_done == 17
+    bar.finish()

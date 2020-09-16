@@ -22,7 +22,7 @@ class JabBar:
             file: TextIO = sys.stdout,
             enable: bool = True,
             keep: bool = True,
-            bar_symbols: Union[Tuple[str], str] = BAR_SYMBOLS):
+            symbols: Union[Tuple[str], str] = BAR_SYMBOLS):
         """Initialize the bar.
 
         :param iterable: An iterable to show the progress for while iterating
@@ -32,7 +32,7 @@ class JabBar:
         :param file: The target where to write the progress bar to
         :param enable: Whether to actually show the progress bar
         :param keep: Whether to keep or remove the bar afterwards
-        :param bar_symbols: Bar symbols to use, with increasing fill degree.
+        :param symbols: Bar symbols to use, with increasing fill degree
         """
         self.iterable = iterable
         self.total: int = total
@@ -42,13 +42,13 @@ class JabBar:
         self.enable: bool = enable
         self.keep: bool = keep
 
-        if isinstance(bar_symbols, str):
-            bar_symbols = (bar_symbols,)
-        bar_symbols = tuple(bar_symbols)
-        if '' not in bar_symbols:
+        if isinstance(symbols, str):
+            symbols = (symbols,)
+        symbols = tuple(symbols)
+        if '' not in symbols:
             # add empty element
-            bar_symbols = ('',) + bar_symbols
-        self.bar_symbols = bar_symbols
+            symbols = ('',) + symbols
+        self.symbols = symbols
 
         self.n_done: int = 0
         self.len: int = 0
@@ -107,16 +107,16 @@ class JabBar:
         # number of full bar fields is the integer below
         n_full = int(width_full)
         # number of full symbols
-        n_symbol_full = int(n_full / nchar(self.bar_symbols[-1]))
-        bar_full = self.bar_symbols[-1] * n_symbol_full
+        n_symbol_full = int(n_full / nchar(self.symbols[-1]))
+        bar_full = self.symbols[-1] * n_symbol_full
 
         # which of the bar symbols to select for the current symbol
-        phase = int((width_full - n_full) * len(self.bar_symbols))
+        phase = int((width_full - n_full) * len(self.symbols))
         # number of current symbols
         n_symbol_phase = 0
-        if len(self.bar_symbols[phase]):
-            n_symbol_phase = int(1 / nchar(self.bar_symbols[phase]))
-        bar_current = self.bar_symbols[phase] * n_symbol_phase
+        if len(self.symbols[phase]):
+            n_symbol_phase = int(1 / nchar(self.symbols[phase]))
+        bar_current = self.symbols[phase] * n_symbol_phase
 
         # number of empty symbols
         n_empty = self.width - nchar(bar_full) - nchar(bar_current)
