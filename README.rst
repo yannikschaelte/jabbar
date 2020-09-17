@@ -18,6 +18,9 @@ Also, it supports unicorns.
 
 |shell|
 
+For very serious work, you may want to try e.g. the slightly more professional `tqdm <https://github.com/tqdm/tqdm>`_ package.
+
+
 Install
 -------
 
@@ -65,7 +68,7 @@ Further examples can be found in the `example/howto.ipynb <https://github.com/ya
 License
 -------
 
-jabbar is available under a MIT license.
+jabbar is available under an MIT license.
 
 
 .. |build| image:: https://github.com/yannikschaelte/jabbar/workflows/CI/badge.svg
