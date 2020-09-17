@@ -16,6 +16,8 @@ It is lightweight, easy to use and customizable.
 As a special feature, it gracefully deals with seeing more items than expected, e.g. 1100/1000.
 Also, it supports unicorns.
 
+|shell|
+
 Install
 -------
 
@@ -78,3 +80,7 @@ jabbar is available under a MIT license.
 .. |pypi| image:: https://img.shields.io/pypi/v/jabbar.svg
    :target: https://pypi.org/project/jabbar/
    :alt: Current version on PyPI
+
+ 
+.. |shell| image:: https://raw.githubusercontent.com/yannikschaelte/jabbar/master/example/shell.gif
+   :alt: Animation of jabbar in use
