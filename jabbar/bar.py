@@ -5,24 +5,25 @@ from collections.abc import Iterable, Sized
 from typing import TextIO, Tuple, Union
 from unicodedata import east_asian_width as eaw
 
-BAR_SYMBOLS = ('', '▏', '▎', '▍', '▌', '▋', '▊', '▉', '█')
-BAR_PREFIX = ' |'
-BAR_SUFFIX = '| '
+BAR_SYMBOLS = ("", "▏", "▎", "▍", "▌", "▋", "▊", "▉", "█")
+BAR_PREFIX = " |"
+BAR_SUFFIX = "| "
 
 
 class JabBar:
     """Just Another Beautiful progress BAR."""
 
     def __init__(
-            self,
-            iterable: Iterable = None,
-            total: int = None,
-            comment: str = "",
-            width: int = 24,
-            file: TextIO = sys.stdout,
-            enable: bool = True,
-            keep: bool = True,
-            symbols: Union[Tuple[str], str] = BAR_SYMBOLS):
+        self,
+        iterable: Iterable = None,
+        total: int = None,
+        comment: str = "",
+        width: int = 24,
+        file: TextIO = sys.stdout,
+        enable: bool = True,
+        keep: bool = True,
+        symbols: Union[Tuple[str], str] = BAR_SYMBOLS,
+    ):
         """Initialize the bar.
 
         :param iterable: An iterable to show the progress for while iterating
@@ -45,9 +46,9 @@ class JabBar:
         if isinstance(symbols, str):
             symbols = (symbols,)
         symbols = tuple(symbols)
-        if '' not in symbols:
+        if "" not in symbols:
             # add empty element
-            symbols = ('',) + symbols
+            symbols = ("",) + symbols
         self.symbols = symbols
 
         self.n_done: int = 0
@@ -60,7 +61,8 @@ class JabBar:
         if self.total is None:
             raise ValueError(
                 "Either must the iterable have a length attribute, "
-                "or a total been specified.")
+                "or a total been specified.",
+            )
 
     def __enter__(self):
         """Prepare upon entering a context manager."""
@@ -70,7 +72,7 @@ class JabBar:
         """Tidy up Upon exiting a context manager."""
         self.finish()
 
-    def write(self, line: str, end='') -> None:
+    def write(self, line: str, end="") -> None:
         """Write a line.
 
         :param line: The line to write, will be prefixed by a carriage return
@@ -120,14 +122,22 @@ class JabBar:
 
         # number of empty symbols
         n_empty = self.width - nchar(bar_full) - nchar(bar_current)
-        bar_empty = ' ' * n_empty
+        bar_empty = " " * n_empty
 
         str_done = f"{self.n_done}/{self.total}"
 
-        line = ('\r' + str_r_done + BAR_PREFIX +
-                bar_full + bar_current + bar_empty +
-                BAR_SUFFIX + str_done +
-                " " + self.comment)
+        line = (
+            "\r"
+            + str_r_done
+            + BAR_PREFIX
+            + bar_full
+            + bar_current
+            + bar_empty
+            + BAR_SUFFIX
+            + str_done
+            + " "
+            + self.comment
+        )
 
         return line
 
@@ -143,15 +153,14 @@ class JabBar:
         if not self.enable:
             return
         if self.keep:
-            self.write('', end='\n')
+            self.write("", end="\n")
         else:
-            self.write('\r' + ' ' * self.len + '\r')
+            self.write("\r" + " " * self.len + "\r")
 
     def __iter__(self):
         """Iterate over the iterable."""
         if self.iterable is None:
-            raise ValueError(
-                "To use jabbar in iterable mode, pass an iterable.")
+            raise ValueError("To use jabbar in iterable mode, pass an iterable.")
         for val in self.iterable:
             yield val
             self.inc()
@@ -167,7 +176,7 @@ def nchar(symbol: str) -> int:
 
     :returns: A guess of the number of unit-width characters.
     """
-    return len(symbol) + sum(1 for char in symbol if eaw(char) in ['F', 'W'])
+    return len(symbol) + sum(1 for char in symbol if eaw(char) in ["F", "W"])
 
 
 # convenience alias

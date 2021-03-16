@@ -84,6 +84,6 @@ jabbar is available under an MIT license.
    :target: https://pypi.org/project/jabbar/
    :alt: Current version on PyPI
 
- 
+
 .. |shell| image:: https://raw.githubusercontent.com/yannikschaelte/jabbar/master/example/shell.gif
    :alt: Animation of jabbar in use

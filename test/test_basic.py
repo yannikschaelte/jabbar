@@ -53,7 +53,7 @@ def test_stderr():
 
 def test_file():
     """Test output to file."""
-    with tempfile.NamedTemporaryFile(mode='w+') as file:
+    with tempfile.NamedTemporaryFile(mode="w+") as file:
         for _ in jabbar(range(100), file=file):
             pass
 
@@ -72,7 +72,7 @@ def test_keep():
 
 def test_custom_symbols():
     """Test passing custom bar symbols."""
-    for _ in jabbar(range(100), symbols='yo'):
+    for _ in jabbar(range(100), symbols="yo"):
         pass
 
 
@@ -91,7 +91,7 @@ def test_output():
 def test_output_custom_symbols():
     """Test the output with custom symbols."""
     total = 50
-    bar = jabbar(total=total, symbols='xo')
+    bar = jabbar(total=total, symbols="xo")
     for _ in range(17):
         bar.inc()
     out = bar.get_line()
