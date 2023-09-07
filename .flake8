@@ -6,7 +6,7 @@
 
 ignore =
     # print
-    T001
+    T001,T201
     # line break before binary operator
     W503
 per-file-ignores =
