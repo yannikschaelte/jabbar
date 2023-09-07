@@ -1,13 +1,16 @@
 name: CI
 
-on: [push]
+on:
+  push:
+  schedule:
+    - cron: '30 01 * * WED'
 
 jobs:
   build:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: [3.9, 3.6]
+        python-version: [3.11, 3.6]
 
     steps:
     - name: Check out repository
